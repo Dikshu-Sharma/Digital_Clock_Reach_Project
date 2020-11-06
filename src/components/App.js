@@ -1,16 +1,35 @@
-import React, {Component, useState} from "react";
-import '../styles/App.css';
+import React, { Component, useState } from "react";
+import "../styles/App.css";
 
 class App extends Component {
-    render() {
+  constructor() {
+    super();
+    this.state = { time: new Date() }; // initialise the state
+  }
 
-        return(
-            <>
-               
-            </>
-        )
-    }
+  componentDidMount() {
+    // create the interval once component is mounted
+    this.update = setInterval(() => {
+      this.setState({ time: new Date() });
+    }, 1 * 1000); // every 1 seconds
+  }
+
+  componentWillUnmount() {
+    // delete the interval just before component is removed
+    clearInterval(this.update);
+  }
+
+  render() {
+    const { time } = this.state; // retrieve the time from state
+
+    return (
+      <>
+        <div id="Clock">
+          <h3 id="time">{time.toLocaleTimeString("en-US")}</h3>
+        </div>
+      </>
+    );
+  }
 }
-
 
 export default App;
